@@ -5,7 +5,7 @@ class Hospital {
     this.radius = x;
     this.timer = null;
     this.img = new Image(40, 100);
-    this.img.src = '../assets/hospital_small.png';
+    this.img.src = './assets/hospital_small.png';
     this.imgLoaded = false;
 
     this.img.onload = () => {
