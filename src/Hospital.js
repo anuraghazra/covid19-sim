@@ -6,6 +6,14 @@ class Hospital {
     this.timer = null;
     this.img = new Image(40, 100);
     this.img.src = '../assets/hospital_small.png';
+    this.imgLoaded = false;
+
+    this.img.onload = () => {
+      this.imgLoaded = true;
+    }
+    this.img.onerror = () => {
+      this.imgLoaded = false
+    }
   }
 
   heal(boid) {
@@ -35,7 +43,12 @@ class Hospital {
     ctx.textAlign = "center";
     ctx.fillText("capacity : " + Object.values(this.healed).length, this.pos.x + 18, this.pos.y - 10);
     ctx.beginPath();
-    ctx.drawImage(this.img, this.pos.x, this.pos.y, 35, 35);
+    if (this.imgLoaded) {
+      ctx.drawImage(this.img, this.pos.x, this.pos.y, 35, 35);
+    } else {
+      ctx.fillStyle = '#ff5739';
+      ctx.fillRect(this.pos.x, this.pos.y, 35, 35)
+    }
     ctx.closePath();
   }
 }
