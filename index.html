@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COVID-19 SIM</title>
+
+  <style>
+    body,
+    html {
+      font-family: 'Nunito Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      position: absolute;
+      color: rgb(243, 81, 113);
+      margin: 0;
+    }
+
+    .wrapper {
+      background-color: rgba(241, 241, 241, 0.02);
+      color: #f1f1f1;
+      position: absolute;
+      padding: 20px;
+      top: 0px;
+      left: 0px;
+      border-radius: 0 0 10px;
+      transition: 0.3s;
+    }
+
+    .wrapper:hover {
+      background-color: #f1f1f1;
+      color: #242424;
+      transition: 0.3s;
+    }
+
+    .stats {
+      margin-bottom: 15px;
+    }
+
+    .stats p {
+      margin: 0;
+    }
+
+    .stats .infected {
+      color: #ff0f23;
+    }
+
+    .stats .dead {
+      color: #959595;
+    }
+
+    .stats .alive,
+    .recovered {
+      color: #2fb425;
+    }
+
+    .stats>p {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-right: 10px;
+    }
+
+    .stats>p span:nth-child(2) {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    button {
+      border: none;
+      background-color: #ff6673;
+      padding: 5px 10px;
+      color: white;
+      width: fit-content;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff0f23;
+    }
+
+    .checkboxes {
+      display: flex;
+      flex-direction: column;
+      margin-top: 25px;
+    }
+
+    .checkboxes>*:not(:first-child) {
+      margin-top: 20px;
+    }
+
+    small {
+      position: absolute;
+      left: 15px;
+      bottom: 15px;
+      color: gray;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"
+    integrity="sha256-GV8Ae3zupj/zU9Wi2ryJneXgcJlV9+vYCo5CTf5BmGY=" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <canvas id="c"></canvas>
+
+  <main class="wrapper">
+    <div class="stats">
+      <p><span class="alive">Alive</span> <span id="alive">0</span></p>
+      <p><span class="infected">Infected</span> <span id="infected">0</span></p>
+      <p><span class="dead">Dead</span> <span id="dead">0</span></p>
+      <p><span class="recovered">Recovered</span> <span id="recovered">0</span></p>
+    </div>
+
+    <section class="checkboxes">
+      <div class="pretty p-default p-round p-smooth">
+        <input id="keep-distance" type="checkbox" />
+        <div class="state p-success">
+          <label for="keep-distance">Keep social distancing</label>
+        </div>
+      </div>
+      <div class="pretty p-default p-round p-smooth">
+        <input id="dont-listen" type="checkbox" />
+        <div class="state p-success">
+          <label for="dont-listen">Don't listen to Gov.</label>
+        </div>
+      </div>
+
+      <button id="add-infected">Add Infected People</button>
+    </section>
+  </main>
+  <small>Click to add hospitals</small>
+
+  <script src="./src/UI.js"></script>
+  <script src="./src/Vector.js"></script>
+  <script src="./src/utils.js"></script>
+  <script src="./src/Hospital.js"></script>
+  <script src="./src/Boid.js"></script>
+  <script src="./src/Flock.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>
