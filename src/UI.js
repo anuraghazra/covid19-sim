@@ -29,15 +29,15 @@ class UI {
     })
   }
 
-  printStats() {
-    const deadCount = Object.values(STATS.dead).filter(e => e === 1).length;
-    const aliveCount = BOIDS_COUNT - deadCount;
-    const infectedCount = Object.values(STATS.infected).filter(e => e === 1).length;
+  printStats(boidsCount) {
+    const deadCount = Object.values(STATS.dead).length;
+    const aliveCount = boidsCount - deadCount;
+    const infectedCount = Object.values(STATS.infected).length;
     const recoveredCount = Object.values(STATS.recovered).length;
 
-    this.alive.innerText = aliveCount;
-    this.dead.innerText = deadCount;
-    this.infected.innerText = infectedCount - deadCount
-    this.recovered.innerText = recoveredCount
+    this.alive.innerText = Math.max(0, aliveCount);
+    this.dead.innerText = Math.max(0, deadCount);
+    this.infected.innerText = Math.max(0, infectedCount - deadCount)
+    this.recovered.innerText = Math.max(0, recoveredCount)
   }
 }

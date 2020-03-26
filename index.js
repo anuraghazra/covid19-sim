@@ -20,8 +20,8 @@ const GLOBAL_MULTIPLIER = {
 }
 // map of boid ids
 const STATS = {
-  infected: {},
   dead: {},
+  infected: {},
   recovered: {}
 }
 
@@ -37,6 +37,11 @@ window.onload = function () {
 
   const boids = [];
   const hospitals = [];
+  const addInfectedBoid = () => {
+    let infectedBoid = new Boid(width / 2, height / 2);
+    infectedBoid.isInfected = true;
+    boids.push(infectedBoid);
+  }
 
   for (let i = 0; i < BOIDS_COUNT; i++) {
     boids.push(new Boid(random(width), random(height)))
@@ -56,9 +61,8 @@ window.onload = function () {
     hospitals.push(new Hospital(e.offsetX, e.offsetY))
   })
   ui.addInfectedButton.addEventListener('click', function () {
-    let infectedBoid = new Boid(width / 2, height / 2);
-    infectedBoid.isInfected = true;
-    boids.push(infectedBoid);
+    addInfectedBoid();
+    addInfectedBoid();
   })
 
   function animate() {
@@ -75,16 +79,12 @@ window.onload = function () {
       boid.setMaxSpeed(GLOBAL_MULTIPLIER.maxSpeed)
       boid.render(ctx);
 
-      if (boid.isDead) {
-        STATS.dead[boid.id] = 1;
-      } else {
-        STATS.dead[boid.id] = 0;
-      };
+      if (boid.isDead) STATS.dead[boid.id] = 1;
     }
 
     hospitals.forEach(h => h.render(ctx))
 
-    ui.printStats();
+    ui.printStats(boids.length);
 
     requestAnimationFrame(animate);
   }

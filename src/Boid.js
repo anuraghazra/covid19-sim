@@ -52,7 +52,7 @@ class Boid {
       this.isInfected = false;
       this.health = 1;
       STATS.recovered[this.id] = 1;
-      STATS.infected[this.id] = 0;
+      delete STATS.infected[this.id];
     }
   }
 
@@ -163,17 +163,24 @@ class Boid {
       let boidB = boids[i];
       maxDist = dist(boidB.pos.x, boidB.pos.y, this.pos.x, this.pos.y);
 
-      const isCloseEnough = maxDist < (this.radius + boidB.radius)
-      const oneOfThemIsInfected = (this.isInfected || boidB.isInfected)
+      const isCloseEnough = maxDist < (this.radius + boidB.radius);
+      const oneOfThemIsInfected = (this.isInfected || boidB.isInfected);
+      // const oneOfThemNotDead = this.isDead || boidB.isDead;
+
       if (
         isCloseEnough
         && oneOfThemIsInfected
+        // && !oneOfThemNotDead
         && this.willInfect()
       ) {
-        this.isInfected = true;
-        boidB.isInfected = true;
-        STATS.infected[this.id] = 1;
-        STATS.infected[boidB.id] = 1;
+        if (this.isInfected) {
+          boidB.isInfected = true;
+          STATS.infected[boidB.id] = 1;
+        }
+        if (boidB.isInfected) {
+          this.isInfected = true;
+          STATS.infected[this.id] = 1;
+        }
       }
     }
   }
